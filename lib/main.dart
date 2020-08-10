@@ -25,44 +25,39 @@ class HomeWidget extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const Text("None expanded:"),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Main Axis Alignment"),
-              Text("is"),
-              Text("center"),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const Text("MainAxisAlignment"),
-              const Text("is"),
-              const Text("end"),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Text("MainAxisAlignment"),
-              const Text("is"),
-              const Text("spaceEvenly"),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text("MainAxisAlignment"),
-              const Text("is"),
-              const Text("spaceBetween")
+              const Text("aaaaaaaaaa"),
+              const Text("bbbbbbbbbb"),
+              const Text("cccccccccc")
             ],
           ),
+          const Text("1st child expanded:"),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Text("MainAxisAlignment"),
-              const Text("is"),
-              const Text("start")
+              const Expanded(child: const Text("aaaaaaaaaa")),
+              const Text("bbbbbbbbbb"),
+              const Text("cccccccccc"),
+            ],
+          ),
+          const Text("2nd child expanded:"),
+          Row(
+            children: <Widget>[
+              const Text("aaaaaaaaaa"),
+              const Expanded(child: const Text("bbbbbbbbbb")),
+              const Text("cccccccccc"),
+            ],
+          ),
+          const Text("3rd child expanded:"),
+          Row(
+            children: <Widget>[
+              const Text("aaaaaaaaaa"),
+              const Text("bbbbbbbbbb"),
+              const Expanded(
+                child: const Text("cccccccccc"),
+              )
             ],
           ),
         ],
