@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(new StackPleaseWaitAppWidget());
+void main() => runApp(new MyApp());
 
-class StackPleaseWaitAppWidget extends StatelessWidget {
+class MyApp extends StatelessWidget {
+// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -10,76 +11,69 @@ class StackPleaseWaitAppWidget extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new HomeWidget(title: 'Card Layout Demo'),
+      home: new HomeWidget(),
     );
   }
 }
 
 class HomeWidget extends StatefulWidget {
-  HomeWidget({Key key, this.title}) : super(key: key);
-  final String title;
-  final PleaseWaitWidget _pleaseWaitWidget =
-      PleaseWaitWidget(key: ObjectKey("pleaseWaitWidget"));
-  final AppWidget _appWidget = AppWidget(key: ObjectKey("appWidget"));
+  HomeWidget({Key key}) : super(key: key);
   @override
   _HomeWidgetState createState() => new _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  bool _pleaseWait = false;
-  void _togglePleaseWait() {
+  static const double TWENTY = 20.0;
+  static const List<String> _titles = [
+    "all 20.0",
+    "left 20.0",
+    "right 20.0",
+    "top 20.0",
+    "bottom 20.0",
+    "sym horiz 20.0",
+    "sym vert 20.0"
+  ];
+  static const List<EdgeInsets> _edgeInsets = [
+    const EdgeInsets.all(TWENTY),
+    const EdgeInsets.only(left: TWENTY),
+    const EdgeInsets.only(right: TWENTY),
+    const EdgeInsets.only(top: TWENTY),
+    const EdgeInsets.only(bottom: TWENTY),
+    const EdgeInsets.symmetric(horizontal: TWENTY),
+    const EdgeInsets.symmetric(vertical: TWENTY)
+  ];
+  int _index = 0;
+  final Container _childContainer = Container(color: Colors.blue);
+  void _next() {
     setState(() {
-      _pleaseWait = !_pleaseWait;
+      _index++;
+      if (_index >= _titles.length) {
+        _index = 0;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> childWidgets = _pleaseWait
-        ? [widget._pleaseWaitWidget, widget._appWidget]
-        : [widget._appWidget];
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(widget.title),
-        ),
-        body: new Center(
-            child: Stack(key: ObjectKey("stack"), children: childWidgets)),
-        floatingActionButton: new FloatingActionButton.extended(
-            onPressed: _togglePleaseWait,
-            label: Text('Please Wait On/Off'),
-            icon: new Icon(Icons.cached)));
-  }
-}
-
-class PleaseWaitWidget extends StatelessWidget {
-  PleaseWaitWidget({
-    Key key,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-          child: CircularProgressIndicator(strokeWidth: 8.0),
-        ),
-        color: Colors.grey.withOpacity(0.3));
-  }
-}
-
-class AppWidget extends StatelessWidget {
-  AppWidget({
-    Key key,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          const Text('Your', style: TextStyle(fontSize: 20.0)),
-          const Text('App', style: TextStyle(fontSize: 20.0)),
-          const Text('Goes', style: TextStyle(fontSize: 20.0)),
-          const Text('Here', style: TextStyle(fontSize: 20.0))
+    Padding padding =
+        Padding(padding: _edgeInsets[_index], child: _childContainer);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_titles[_index]),
+        actions: [
+          new IconButton(
+            icon: new Icon(Icons.refresh),
+            onPressed: () => _next(),
+          )
         ],
+      ),
+      body: Center(
+        child: Container(
+          child: padding,
+          decoration: BoxDecoration(
+            border: new Border.all(color: Colors.blueAccent),
+          ),
+        ),
       ),
     );
   }
