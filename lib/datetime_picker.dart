@@ -372,21 +372,12 @@ class _AddressWidgetState extends State<AddressWidget> {
   DateTimeField createDobWidget() {
     return new DateTimeField(
       format: _dateFormat,
-      onShowPicker: (context, currentValue) async {
-        final date = await showDatePicker(
+      onShowPicker: (context, currentValue) {
+        return showDatePicker(
             context: context,
             firstDate: DateTime(1900),
             initialDate: currentValue ?? DateTime.now(),
             lastDate: DateTime(2100));
-        if (date != null) {
-          final time = await showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-          );
-          return DateTimeField.combine(date, time);
-        } else {
-          return currentValue;
-        }
       },
     );
   }
